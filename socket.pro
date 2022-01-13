@@ -1,4 +1,9 @@
-QT -= gui
+QT -= core gui
+
+
+TEMPLATE = app
+DESTDIR += ./bin
+
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -15,9 +20,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        communicationserver.cpp \
         main.cpp
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+unix{
+    contains(QT_ARCH, i386){
+
+             }
+    contains(QT_ARCH, x86_64){
+        INCLUDEPATH += $$PWD/depends/libev/linux_64/inc
+        LIBS += -L$$PWD/depends/libev/linux_64/lib -lev
+    }
+
+
+}else{
+    contains(QT_ARCH, i386){
+        #32bit  python
+        LIBS += -L$$PWD/lib/python/ -lpython37
+        INCLUDEPATH += $$PWD/lib/python/include
+    }
+    contains(QT_ARCH, x86_64){
+        #64bit
+        message(STATUS"********Win64********$$")
+    }
+}
+
+HEADERS += \
+    communicationserver.h
+
+
