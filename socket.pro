@@ -21,7 +21,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         communicationserver.cpp \
-        main.cpp
+        main.cpp \
+        protobuf/person.pb.cc
+
+HEADERS += \
+    communicationserver.h \
+    protobuf/person.pb.h
 
 unix{
     contains(QT_ARCH, i386){
@@ -30,6 +35,11 @@ unix{
     contains(QT_ARCH, x86_64){
         INCLUDEPATH += $$PWD/depends/libev/linux_64/inc
         LIBS += -L$$PWD/depends/libev/linux_64/lib -lev
+
+        INCLUDEPATH += $$PWD/depends/protobuf/linux_64
+        LIBS += -L$$PWD/depends/protobuf/linux_64/lib/ -lprotobuf
+#        LIBS += $$PWD/depends/protobuf/linux_64/lib/libprotobuf.a
+
     }
 
 
@@ -45,7 +55,9 @@ unix{
     }
 }
 
-HEADERS += \
-    communicationserver.h
+DISTFILES += \
+    protobuf/person.proto
+
+
 
 
