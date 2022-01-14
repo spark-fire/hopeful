@@ -8,6 +8,8 @@
 
 #include <iostream>
 
+#include "protobuf/person.pb.h"
+
 #include "communicationserver.h"
 
 #define SERVER_PORT      12306
@@ -16,6 +18,30 @@
 
 int main()
 {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+    Test::Person p;
+    p.set_id(12306);
+    p.set_name("railway");
+    p.set_email("helloworld@qq.com");
+
+    std::cout << p.id() << std::endl;
+    std::cout << p.name() << std::endl;
+    std::cout << p.email() << std::endl;
+
+    //序列化
+    std::string encode_str;
+    p.SerializeToString(&encode_str);
+    // srting类型保持不变
+    //    std::cout << encode_str << std::endl;
+
+    //反序列化
+    Test::Person p1;
+    p1.ParseFromString(encode_str);
+    std::cout << p1.id() << std::endl;
+    std::cout << p1.name() << std::endl;
+    std::cout << p1.email() << std::endl;
+
     //    int sockServer = -1;
     //    int connfd = -1;
     //    struct sockaddr_in addrClient;

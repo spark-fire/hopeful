@@ -25,6 +25,7 @@ bool CommunicationServer::serviceLoopStart()
         if (!m_eventloop) {
             std::cout << "create eventloop failed" << std::endl;
         }
+
         ev_io_init(&m_connectIoWatcher, acceptNewUserCallback, m_listenFd,
                    EV_READ);
         ev_io_start(m_eventloop, &m_connectIoWatcher);
