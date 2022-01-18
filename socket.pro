@@ -5,7 +5,7 @@ TEMPLATE = app
 DESTDIR += ./bin
 
 
-CONFIG += c++11 console
+CONFIG += c++17 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -41,10 +41,6 @@ unix{
         INCLUDEPATH += $$PWD/depends/protobuf/linux_64
         LIBS += -L$$PWD/depends/protobuf/linux_64/lib/ -lprotobuf
 #        LIBS += $$PWD/depends/protobuf/linux_64/lib/libprotobuf.a
-
-        INCLUDEPATH += $$PWD/depends/log4cplus/linux_64/inc
-        LIBS += -L$$PWD/depends/log4cplus/linux_64/lib/ -llog4cplus
-
     }
 
 

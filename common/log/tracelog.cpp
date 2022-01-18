@@ -1,5 +1,7 @@
 #include "tracelog.h"
 #include <stdio.h>
+#include <unistd.h>   //access
+#include <sys/stat.h> //mkdir
 #include <iostream>
 
 #include <log4cplus/configurator.h>
@@ -11,13 +13,17 @@ using namespace log4cplus::helpers;
 
 TraceLog::TraceLog()
 {
-    if (system("mkdir config")) {
-        std::cout << "mkdir config failed !" << std::endl;
-    }
+    int ret = -1;
+    if (-1 == access("./config", 0)) {
+        ret = mkdir("./config", S_IROTH);
+        if (ret) {
+            std::cout << "mkdir config failed !" << std::endl;
+        }
 
-    if (system("cp ../../hopeful/common/log/config/tracelog.properties "
-               "./config")) {
-        std::cout << "cp  tracelog.properties failed !" << std::endl;
+        if (system("cp ../../hopeful/common/log/config/tracelog.properties "
+                   "./config")) {
+            std::cout << "cp  tracelog.properties failed !" << std::endl;
+        }
     }
 
     initTraceLog("./config/tracelog.properties");
