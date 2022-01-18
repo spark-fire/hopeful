@@ -19,6 +19,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+include(common/common.pri)
+
 SOURCES += \
         communicationserver.cpp \
         main.cpp \
@@ -39,6 +41,9 @@ unix{
         INCLUDEPATH += $$PWD/depends/protobuf/linux_64
         LIBS += -L$$PWD/depends/protobuf/linux_64/lib/ -lprotobuf
 #        LIBS += $$PWD/depends/protobuf/linux_64/lib/libprotobuf.a
+
+        INCLUDEPATH += $$PWD/depends/log4cplus/linux_64/inc
+        LIBS += -L$$PWD/depends/log4cplus/linux_64/lib/ -llog4cplus
 
     }
 
