@@ -12,12 +12,16 @@
 
 #include "communicationserver.h"
 
+#include "global.h"
+
 #define SERVER_PORT      12306
 #define MAX_CLIENT_COUNT 5
 #define MAXLIN           4096
 
 int main()
 {
+    W_INFO("Entering main()...");
+
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     Test::Person p;
@@ -32,6 +36,10 @@ int main()
     //序列化
     std::string encode_str;
     p.SerializeToString(&encode_str);
+    int size = p.ByteSizeLong();
+    std::cout << size << std::endl;
+    std::cout << encode_str.size() << std::endl;
+
     // srting类型保持不变
     //    std::cout << encode_str << std::endl;
 

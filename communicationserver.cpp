@@ -8,6 +8,8 @@
 #include <iostream>
 #include <unistd.h> //close()
 
+#include "protobuf/person.pb.h"
+
 #define SERVER_PORT      12306
 #define MAX_CLIENT_COUNT 5
 #define MAXLIN           4096
@@ -158,5 +160,13 @@ void CommunicationServer::recvUserMsgCallback(struct ev_loop *loop, ev_io *w,
         free(w);
     } else {
         printf("READ:\r\n    %s\r\n", buffer);
+
+        //反序列化
+        std::string recv(buffer);
+        Test::Person p1;
+        p1.ParseFromString(recv);
+        std::cout << p1.id() << std::endl;
+        std::cout << p1.name() << std::endl;
+        std::cout << p1.email() << std::endl;
     }
 }
